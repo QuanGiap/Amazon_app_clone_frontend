@@ -2,7 +2,7 @@ import "./EditProduct.css"
 import React,{useEffect,useState} from 'react'
 import { Grid, Paper, TextField, Button, Typography } from "@mui/material";
 import { postImg, updateProduct } from "../tools/axiosFetch";
-
+// import socket from "../tools/socketClient";
 const IMAGE_SIZE_MAX = 500000
 const reader = new FileReader();
 export default function EditProduct({onClose=()=>{},onUpdate = () => {},prev_img="",prev_img_name="",prev_product_name="unknow",prev_product_descibe = "unknow",prev_product_price = -1,prev_product_discount = -1,prev_product_quanity = -1,product_id=-1}) {

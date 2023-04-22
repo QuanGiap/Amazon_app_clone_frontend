@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ForgotPassPage.css";
 import { Grid, Paper, TextField, Button, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
-import { sendForgotPassCode, checkForgotPassCode } from "../tools/axiosFetch";
+import { sendForgotPassCode, checkForgotPassCode } from "../../tools/axiosFetch";
 const HELPER_TEXT_USER =
   "Type your username here then press \"SEND CODE\" button";
 const HELPER_TEXT_CODE = "Confirm code from your email";

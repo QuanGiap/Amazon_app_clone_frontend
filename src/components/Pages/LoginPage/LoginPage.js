@@ -2,8 +2,8 @@ import React from "react";
 import "./LoginPage.css"
 import { Grid, Paper, TextField,Button,Typography} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../tools/axiosFetch";
-export default function Login(props) {
+import { signIn } from "../../tools/axiosFetch";
+export default function Login({navToMenuPage= () => {},getUserInfo = async() => {}}) {
     const [username,setUsername] = React.useState("");
     const [passsword,setPassword] = React.useState("");
     const [textAnnounce,setTextAnnounce] = React.useState("");
@@ -18,11 +18,12 @@ export default function Login(props) {
             const authInfo = result.data.AuthenticationResult;
             localStorage.setItem("access_token",authInfo.AccessToken);
             localStorage.setItem("refresh_token",authInfo.RefreshToken);
-            props.setUsername(username);
-            props.navToMenuPage();
+            await getUserInfo();
+            navToMenuPage();
         }catch(err){
+          console.log(err);
           //if the user is not confirm email
-          if(err.response.data.developer?.name === "UserNotConfirmedException") setIsNotConfirm(true);
+          if(err.response?.data?.developer?.name === "UserNotConfirmedException") setIsNotConfirm(true);
           setTextAnnounce(err.response?.data?.message||err.message)
         }
     }

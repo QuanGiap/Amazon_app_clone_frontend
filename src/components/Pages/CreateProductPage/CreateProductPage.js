@@ -2,7 +2,7 @@ import "./CreateProductPage.css"
 import React,{useEffect,useState} from 'react'
 import { Grid, Paper, TextField, Button, Typography } from "@mui/material";
 import {useNavigate} from 'react-router-dom'
-import { postImg, postProduct } from "../tools/axiosFetch";
+import { postImg, postProduct } from "../../tools/axiosFetch";
 
 const IMAGE_SIZE_MAX = 500000
 const reader = new FileReader();
@@ -19,9 +19,9 @@ export default function CreateProductPage({user_id}) {
   const [errorText, setErrorText] = useState("");
   useEffect(()=>{
     if(!localStorage.getItem("access_token")) nav("/sign_in");
-    reader.onload = (e)=>{
+    const check = reader.onload = (e)=>{
       setSrcImg(e.target.result);
-      console.log(e.target.result);
+      console.log("Reading");
     }
   },[])
   useEffect(()=>{

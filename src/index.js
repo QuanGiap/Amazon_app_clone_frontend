@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom"
 import {QueryClient,QueryClientProvider} from "react-query"
-import ErrorBoundary from './components/ErrorPage/ErrorPage';
+import ErrorBoundary from './components/Pages/ErrorPage/ErrorPage';
 const queryclient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
     <QueryClientProvider client={queryclient}>
     <ErrorBoundary>
@@ -16,7 +16,7 @@ root.render(
     </ErrorBoundary>
     </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 

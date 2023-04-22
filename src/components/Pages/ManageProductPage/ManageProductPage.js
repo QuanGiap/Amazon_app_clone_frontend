@@ -1,13 +1,13 @@
 import "./ManageProductPage.css";
 import React, { useState, useEffect } from "react";
-import { deleteProduct, getProductsByUserId } from "../tools/axiosFetch";
+import { deleteProduct, getProductsByUserId } from "../../tools/axiosFetch";
 import { Paper, Grid, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
-import EditProduct from "../EditProduct/EditProduct";
+import EditProduct from "../../EditProduct/EditProduct";
 export default function ManageProductPage({ user_id = "" }) {
   const nav = useNavigate();
   const [products, setProducts] = useState([]);

@@ -14,15 +14,56 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-import Login from "./components/LoginPage/LoginPage";
+import Login from "./components/Pages/LoginPage/LoginPage";
 import { getUserInfo } from "./components/tools/axiosFetch";
 import destructAtr from "./components/tools/destructAtr";
-import HomePage from "./components/HomePage/HomePage";
-import ForgotPassPage from "./components/ForgotPassPage/ForgotPassPage";
-import CreateProductPage from "./components/CreateProductPage/CreateProductPage";
+import HomePage from "./components/Pages/HomePage/HomePage";
+import ForgotPassPage from "./components/Pages/ForgotPassPage/ForgotPassPage";
+import CreateProductPage from "./components/Pages/CreateProductPage/CreateProductPage";
 import { IconMenu } from "./components/Menu/Menu";
-import ManageProductPage from "./components/ManageProductPage/ManageProductPage";
-
+import ManageProductPage from "./components/Pages/ManageProductPage/ManageProductPage";
+import socket,{connectSocket,disconnectSocket} from "./components/tools/socketClient";
+import InspectProductPage from "./components/Pages/InspectProductPage/InspectProductPage";
+import MessageBox from "./components/MessageBox/MessageBox";
+const test_case = {
+  test: {
+    user_name: "test",
+    messages: [
+      { is_owner: false, message: "This is a reply from other user" },
+      { is_owner: false, message: "This is a reply" },
+      { is_owner: false, message: "This is a reply from other user" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+      { is_owner: true, message: "This is a reply from you" },
+    ],
+  },
+  test2: {
+    user_name: "test2",
+    messages: [
+      { is_owner: false, message: "This is a reply from other user" },
+      { is_owner: true, message: "This is a reply from you" },
+    ],
+  },
+  test3: {
+    user_name: "test3",
+    messages: [
+      { is_owner: false, message: "This is a reply from other user" },
+      { is_owner: true, message: "This is a reply from you" },
+    ],
+  },
+  test4: {
+    user_name: "test4",
+    messages: [
+      { is_owner: false, message: "This is a reply from other user" },
+      { is_owner: true, message: "This is a reply from you" },
+    ],
+  },
+};
+const test_chats_window = ["test", "test2", "test3"];
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,16 +72,20 @@ class App extends Component {
     this.state = {
       username: "",
       user_data: null,
+      user_chats:test_chats_window,
+      users:test_case,
     };
   }
   async getInfo() {
     try {
-      const { data } = await getUserInfo();
+      const {data} = await getUserInfo();
+      console.log(data);
       const userInfo = destructAtr(data);
       this.setState({
         user_data: userInfo,
         username: data.Username,
       });
+      connectSocket();
     } catch (err) {
       console.log(err);
       this.LogOut();
@@ -50,6 +95,7 @@ class App extends Component {
     localStorage.clear();
     this.props.nav("/");
     this.setState({ username: "", user_data: null });
+    disconnectSocket();
   }
   componentDidMount() {
     const token = localStorage.getItem("access_token");
@@ -57,13 +103,8 @@ class App extends Component {
       this.getInfo();
     }
   }
-  componentDidUpdate(prevProps) {
-    if (this.state.username && !this.state.user_data) {
-      this.getInfo();
-    }
-  }
   render() {
-    const { username, user_data } = this.state;
+    const { username, user_data,users,user_chats } = this.state;
     const { nav } = this.props;
     const menu_info = [
       { menu_item_name: "Home page", onClick: () => nav("/") },
@@ -113,12 +154,16 @@ class App extends Component {
         </AppBar>
         <Routes>
           <Route index element={<HomePage />} />
+          <Route
+            path="/product/:product_id"
+            element={<InspectProductPage />}
+          />
           <Route path="/sign_up" element={<RegistrationForm />} />
           <Route
             path="/sign_in"
             element={
               <Login
-                setUsername={(username) => this.setState({ username })}
+                getUserInfo={this.getInfo}
                 navToMenuPage={() => nav("/")}
               />
             }
@@ -137,6 +182,7 @@ class App extends Component {
           />
           <Route path="/forgot_pass" element={<ForgotPassPage />} />
         </Routes>
+        <MessageBox users={users} user_chats={user_chats} setUsers={(funct)=>this.setState((prev_state)=>funct(prev_state.users))} setUsersChats={(funct)=>this.setState((prev_state)=>funct(prev_state.user_chats))}/>
       </StyledEngineProvider>
     );
   }

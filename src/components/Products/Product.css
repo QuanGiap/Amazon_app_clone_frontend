@@ -4,10 +4,9 @@
     width: max-content;
 }
 .product_paper{
-    max-width: 400px;
-    max-height: 400px;
-    width: 400px;
-    height: 400px;
+    padding: 5px;
+    max-width: 100%;
+    width: 100%;
 }
 .product_name{
     max-width: 300px;

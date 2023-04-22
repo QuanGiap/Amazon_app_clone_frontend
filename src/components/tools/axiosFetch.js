@@ -47,8 +47,9 @@ export function getProducts({name_search,amount,page}){
     return Fetch.get("product",{params:{Amount:amount,Page:page,Search:name_search}});
 }
 //require access token start from this fectch
-export async function getUserInfo(){
-    return fecthData(()=>Fetch.get("user",setupConfig()));
+export function getUserInfo(req){
+    if(!req?.user_id) return fecthData(()=>Fetch.get("user",setupConfig()));
+    return fecthData(()=>Fetch.get("user/"+req.user_id,setupConfig()))
 }
 export async function postProduct({product_name,product_describe,product_price,product_discount,product_quantity}){
     const product_info = {
@@ -86,7 +87,7 @@ export async function updateProduct({product_name,product_describe,product_disco
 //create ability to request a new access token when the old one is expired. After that, refect the data with a new token 
 async function fecthData(funct){
     try{
-        const result = funct();
+        const result = await funct();
         return result;
     }catch(err){
         const data = await getAccessToken();

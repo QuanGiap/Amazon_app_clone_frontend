@@ -1,0 +1,40 @@
+.messager_box{
+    width: 20%;
+    min-width: 180px;
+    max-width: 200px;
+    max-height: 300px;
+    background-color: wheat;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+    overflow: hidden;
+}
+.messagers_grid_container{
+    position: fixed;
+    bottom: 0;
+}
+.message_text{
+    padding: 5px;
+}
+.expand_icon_grid{
+    margin-left: auto;
+}
+.message_box_text_grid{
+    cursor: pointer;
+    align-self: center;
+}
+.user_name_text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+.chat_window{
+    padding: 5px;
+    overflow-y: auto;
+    background-color: white;
+    height: 200px;
+}
+.users_messager_container{
+    overflow: auto;
+    max-height: 250px;
+}
