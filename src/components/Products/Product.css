@@ -4,6 +4,7 @@
     width: max-content;
 }
 .product_paper{
+    cursor: pointer;
     padding: 5px;
     max-width: 100%;
     width: 100%;

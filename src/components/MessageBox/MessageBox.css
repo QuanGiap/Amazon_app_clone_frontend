@@ -10,6 +10,8 @@
 }
 .messagers_grid_container{
     position: fixed;
+    width: auto;
+    right: 0;
     bottom: 0;
 }
 .message_text{

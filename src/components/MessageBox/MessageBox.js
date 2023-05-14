@@ -15,7 +15,6 @@ import socket, { sendMessageToOtherUser } from "../tools/socketClient";
 import { getUserInfo } from "../tools/axiosFetch";
 import CloseIcon from "@mui/icons-material/Close";
 import { nanoid } from "nanoid";
-
 const test_chats_window = ["test", "test2", "test3", "test4"];
 export default function MessageBox({ id,users,setUsers,user_chats,setUsersChats}) {
   const [is_open, setOpen] = useState(false);
@@ -108,8 +107,6 @@ export default function MessageBox({ id,users,setUsers,user_chats,setUsersChats}
   return (
     <Grid
       container
-      spacing={1}
-      justifyContent={"flex-start"}
       className="messagers_grid_container"
       direction={"row-reverse"}
     >
